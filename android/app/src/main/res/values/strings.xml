@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NEET PG Rapid Cards</string>
+    <string name="title_activity_main">NEET PG Rapid Cards</string>
+    <string name="package_name">com.neetpg.rapidcards</string>
+    <string name="custom_url_scheme">com.neetpg.rapidcards</string>
+</resources>
