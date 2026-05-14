@@ -1,42 +1,75 @@
+import { useState } from "react";
+
 export default function App() {
-    return (
-        <div style={{ padding: '20px', fontFamily: 'Arial' }}>
-              <h1>🧠 NEET PG Rapid Cards</h1>
+  const [showAnswer, setShowAnswer] = useState(false);
 
-                    <h2>Today's Revision</h2>
+    const subjects = [
+        "Medicine",
+            "Surgery",
+                "Toxicology",
+                    "Forensic",
+                        "Pharmacology",
+                            "Pathology"
+                              ];
 
-                          <div
-                                  style={{
-                                            border: '1px solid gray',
-                                                      padding: '15px',
-                                                                borderRadius: '10px',
-                                                                        }}
-                                                                              >
-                                                                                      <h3>Best antidote for lead poisoning?</h3>
+                                return (
+                                    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+                                          <h1>🧠 NEET PG Rapid Cards</h1>
 
-                                                                                              <details>
-                                                                                                        <summary>Show Answer</summary>
-                                                                                                                  Calcium disodium EDTA
-                                                                                                                          </details>
-                                                                                                                                </div>
+                                                <div
+                                                        style={{
+                                                                  border: "1px solid gray",
+                                                                            padding: "20px",
+                                                                                      borderRadius: "10px",
+                                                                                                marginBottom: "20px"
+                                                                                                        }}
+                                                                                                              >
+                                                                                                                      <h2>Today's Revision</h2>
 
-                                                                                                                                      <br />
+                                                                                                                              <h3>Best antidote for lead poisoning?</h3>
 
-                                                                                                                                            <button>Create Deck</button>
+                                                                                                                                      {!showAnswer ? (
+                                                                                                                                                <button onClick={() => setShowAnswer(true)}>
+                                                                                                                                                            Show Answer
+                                                                                                                                                                      </button>
+                                                                                                                                                                              ) : (
+                                                                                                                                                                                        <>
+                                                                                                                                                                                                    <h3>Calcium disodium EDTA</h3>
 
-                                                                                                                                                  <button style={{ marginLeft: '10px' }}>
-                                                                                                                                                          Import Notes
-                                                                                                                                                                </button>
+                                                                                                                                                                                                                <button>😄 Easy</button>
 
-                                                                                                                                                                      <h2>Subjects</h2>
+                                                                                                                                                                                                                            <button style={{ marginLeft: "10px" }}>
+                                                                                                                                                                                                                                          😐 Medium
+                                                                                                                                                                                                                                                      </button>
 
-                                                                                                                                                                            <ul>
-                                                                                                                                                                                    <li>Medicine</li>
-                                                                                                                                                                                            <li>Surgery</li>
-                                                                                                                                                                                                    <li>Toxicology</li>
-                                                                                                                                                                                                            <li>Forensic</li>
-                                                                                                                                                                                                                  </ul>
-                                                                                                                                                                                                                      </div>
-                                                                                                                                                                                                                        );
-                                                                                                                                                                                                                        
-}
+                                                                                                                                                                                                                                                                  <button style={{ marginLeft: "10px" }}>
+                                                                                                                                                                                                                                                                                😵 Hard
+                                                                                                                                                                                                                                                                                            </button>
+                                                                                                                                                                                                                                                                                                      </>
+                                                                                                                                                                                                                                                                                                              )}
+                                                                                                                                                                                                                                                                                                                    </div>
+
+                                                                                                                                                                                                                                                                                                                          <h2>Subjects</h2>
+
+                                                                                                                                                                                                                                                                                                                                {subjects.map((subject) => (
+                                                                                                                                                                                                                                                                                                                                        <div
+                                                                                                                                                                                                                                                                                                                                                  key={subject}
+                                                                                                                                                                                                                                                                                                                                                            style={{
+                                                                                                                                                                                                                                                                                                                                                                        border: "1px solid #ccc",
+                                                                                                                                                                                                                                                                                                                                                                                    margin: "10px 0",
+                                                                                                                                                                                                                                                                                                                                                                                                padding: "15px",
+                                                                                                                                                                                                                                                                                                                                                                                                            borderRadius: "10px"
+                                                                                                                                                                                                                                                                                                                                                                                                                      }}
+                                                                                                                                                                                                                                                                                                                                                                                                                              >
+                                                                                                                                                                                                                                                                                                                                                                                                                                        📚 {subject}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                      ))}
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                            <button>Create Deck</button>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <button style={{ marginLeft: "10px" }}>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          Import Notes
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </button>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      );
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      }
