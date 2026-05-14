@@ -33,183 +33,179 @@ const STORAGE_KEYS = {
   library: "rapidCardsLibrary",
   imports: "rapidCardsRecentImports",
   selectedSubject: "rapidCardsSelectedSubject",
+  bookmarks: "rapidCardsBookmarks",
+  mistakes: "rapidCardsMistakes",
+  progress: "rapidCardsProgress",
 };
+
+const FILTER_TAGS = [
+  "Antidotes",
+  "Drug of Choice",
+  "Syndromes",
+  "Investigations",
+  "One-liners",
+  "Images",
+  "Emergencies",
+];
+
+const REVISION_MODES = [
+  { id: "toxicology", label: "Toxicology Rapid 20", predicate: (card) => card.subject === "Toxicology" || card.tags?.includes("Toxicology") },
+  { id: "antidotes", label: "Antidotes", predicate: (card) => card.tags?.includes("Antidotes") },
+  { id: "emergencies", label: "Emergencies", predicate: (card) => card.tags?.includes("Emergencies") },
+  { id: "one-liners", label: "One-liners", predicate: (card) => card.tags?.includes("One-liners") },
+  { id: "last-day", label: "Last day revision", predicate: (card) => card.tags?.includes("Rapid Revision") || card.tags?.includes("High Yield") },
+];
 
 const seedCardsBySubject = {
   Anatomy: [
     {
       question: "Which nerve supplies the levator palpebrae superioris muscle?",
       answer: "The oculomotor nerve (CN III).",
-      difficulty: "Medium",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "What is the content of the carpal tunnel?",
       answer: "Flexor digitorum superficialis and profundus tendons, flexor pollicis longus tendon, and median nerve.",
-      difficulty: "Easy",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Which vessel forms the anterior cerebral circulation circle?",
       answer: "The anterior communicating artery connects the two anterior cerebral arteries.",
-      difficulty: "Hard",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "What is the functional role of the transverse processes of vertebrae?",
       answer: "They provide attachment for muscles and ligaments involved in movement and stability.",
-      difficulty: "Medium",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Which nerve is most likely injured in a mid-shaft humeral fracture?",
       answer: "The radial nerve.",
-      difficulty: "Easy",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Erb's palsy involves?",
       answer: "C5-C6 roots.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Klumpke's palsy involves?",
       answer: "C8-T1 roots.",
-      difficulty: "Medium",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Sciatic nerve from?",
       answer: "L4-S3.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Femoral nerve from?",
       answer: "L2-L4.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Obturator nerve from?",
       answer: "L2-L4.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Tibial nerve from?",
       answer: "L4-S3.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Common peroneal nerve from?",
       answer: "L4-S2.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Axillary nerve from?",
       answer: "C5-C6.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Musculocutaneous nerve from?",
       answer: "C5-C7.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Median nerve from?",
       answer: "C6-T1.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Ulnar nerve from?",
       answer: "C8-T1.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Phrenic nerve from?",
       answer: "C3-C5.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Vagus nerve is?",
       answer: "Cranial nerve X.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Facial nerve is?",
       answer: "Cranial nerve VII.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Trigeminal nerve is?",
       answer: "Cranial nerve V.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Optic nerve is?",
       answer: "Cranial nerve II.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Oculomotor nerve is?",
       answer: "Cranial nerve III.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Trochlear nerve is?",
       answer: "Cranial nerve IV.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Abducens nerve is?",
       answer: "Cranial nerve VI.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Accessory nerve is?",
       answer: "Cranial nerve XI.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Hypoglossal nerve is?",
       answer: "Cranial nerve XII.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Brachial plexus components?",
       answer: "Roots, trunks, divisions, cords, branches.",
-      difficulty: "Medium",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Lumbosacral plexus from?",
       answer: "L1-S1.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Cervical plexus from?",
       answer: "C1-C4.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Sacral plexus from?",
       answer: "L4-S4.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
   ],
@@ -217,233 +213,1104 @@ const seedCardsBySubject = {
     {
       question: "What is the primary action of aldosterone on the kidney?",
       answer: "It increases sodium reabsorption and potassium excretion in the distal tubule.",
-      difficulty: "Easy",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "What hormone increases glucose uptake in muscle and adipose tissue?",
       answer: "Insulin.",
-      difficulty: "Easy",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "What is the Frank-Starling law of the heart?",
       answer: "Stroke volume increases in response to increased venous return and end-diastolic volume.",
-      difficulty: "Medium",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "What change occurs to the oxyhemoglobin dissociation curve in acidosis?",
       answer: "It shifts to the right.",
-      difficulty: "Hard",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Which mechanism causes a drop in blood pressure on standing?",
       answer: "A transient decrease in venous return and cardiac output.",
-      difficulty: "Medium",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Cardiac output formula?",
       answer: "CO = HR × SV.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Stroke volume determinants?",
       answer: "Preload, afterload, contractility.",
-      difficulty: "Medium",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Frank-Starling law?",
       answer: "Increased preload increases SV.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Mean arterial pressure?",
       answer: "MAP = CO × TPR.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "GFR formula?",
       answer: "GFR = Kf × (Pgc - Pbc - πgc + πbc).",
-      difficulty: "Hard",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Tubular reabsorption?",
       answer: "99% of filtrate reabsorbed.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "ADH action?",
       answer: "Increases water reabsorption in collecting ducts.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Aldosterone action?",
       answer: "Increases Na reabsorption in distal tubule.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Insulin action?",
       answer: "Increases glucose uptake in muscles and fat.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
       question: "Glucagon action?",
       answer: "Increases glycogenolysis and gluconeogenesis.",
-      difficulty: "Medium",
-      tags: ["High Yield", "Rapid Revision"],
-    },
-    {
-      question: "Thyroid hormone action?",
-      answer: "Increases basal metabolic rate.",
-      difficulty: "Easy",
-      tags: ["High Yield", "Rapid Revision"],
-    },
-    {
-      question: "Parathyroid hormone action?",
-      answer: "Increases serum calcium.",
-      difficulty: "Easy",
-      tags: ["High Yield", "Rapid Revision"],
-    },
-    {
-      question: "ACTH action?",
-      answer: "Stimulates cortisol release.",
-      difficulty: "Easy",
-      tags: ["High Yield", "Rapid Revision"],
-    },
-    {
-      question: "GH action?",
-      answer: "Promotes growth and protein synthesis.",
-      difficulty: "Easy",
-      tags: ["High Yield", "Rapid Revision"],
-    },
-    {
-      question: "Prolactin action?",
-      answer: "Stimulates milk production.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
   ],
   Biochemistry: [
     {
-      question: "What is the rate-limiting enzyme of glycolysis?",
+      question: "What is the rate-limiting enzyme in glycolysis?",
       answer: "Phosphofructokinase-1 (PFK-1).",
-      difficulty: "Medium",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Which amino acid is essential and cannot be synthesized by the body?",
-      answer: "Phenylalanine.",
-      difficulty: "Easy",
+      question: "Which vitamin is required for collagen synthesis?",
+      answer: "Vitamin C (ascorbic acid).",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "What is the end product of glycolysis under anaerobic conditions?",
-      answer: "Lactate.",
-      difficulty: "Easy",
+      question: "What is the function of glutathione peroxidase?",
+      answer: "It reduces hydrogen peroxide and organic peroxides using glutathione.",
+      tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "What coenzyme is required for transketolase activity?",
+      question: "Which amino acid is ketogenic only?",
+      answer: "Leucine.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the coenzyme for pyruvate dehydrogenase?",
       answer: "Thiamine pyrophosphate (TPP).",
-      difficulty: "Medium",
-    },
-    {
-      question: "Which lipid carries dietary triglycerides from the intestine?",
-      answer: "Chylomicrons.",
-      difficulty: "Medium",
-    },
-    {
-      question: "Glycolysis rate limiting enzyme?",
-      answer: "Phosphofructokinase-1.",
-      difficulty: "Medium",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Krebs cycle location?",
+      question: "Krebs cycle produces how many ATP?",
+      answer: "2 ATP per turn (via substrate-level phosphorylation).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Beta-oxidation occurs in?",
       answer: "Mitochondrial matrix.",
-      difficulty: "Easy",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Electron transport chain location?",
-      answer: "Inner mitochondrial membrane.",
-      difficulty: "Easy",
+      question: "HMG-CoA reductase inhibited by?",
+      answer: "Statins.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "ATP yield from glucose?",
-      answer: "38 ATP.",
-      difficulty: "Medium",
+      question: "Glycogen synthase activated by?",
+      answer: "Insulin.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Gluconeogenesis key enzyme?",
-      answer: "Phosphoenolpyruvate carboxykinase.",
-      difficulty: "Hard",
+      question: "PKU caused by deficiency of?",
+      answer: "Phenylalanine hydroxylase.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Pathology: [
+    {
+      question: "What is the most common cause of acute pancreatitis?",
+      answer: "Gallstones and alcohol abuse.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Urea cycle location?",
-      answer: "Liver.",
-      difficulty: "Easy",
+      question: "Which tumor marker is elevated in hepatocellular carcinoma?",
+      answer: "Alpha-fetoprotein (AFP).",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Hemoglobin structure?",
-      answer: "4 heme + 4 globin chains.",
-      difficulty: "Easy",
+      question: "What is the characteristic histological feature of rheumatoid arthritis?",
+      answer: "Pannus formation.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Vitamin C deficiency?",
-      answer: "Scurvy.",
-      difficulty: "Easy",
+      question: "Which virus is associated with Burkitt's lymphoma?",
+      answer: "Epstein-Barr virus (EBV).",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Vitamin D deficiency?",
-      answer: "Rickets.",
-      difficulty: "Easy",
+      question: "What is the pathogenesis of acute rheumatic fever?",
+      answer: "Molecular mimicry between streptococcal antigens and heart tissue.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Vitamin K deficiency?",
-      answer: "Bleeding disorders.",
-      difficulty: "Easy",
+      question: "Amyloidosis stained by?",
+      answer: "Congo red.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Iron deficiency anemia?",
-      answer: "Microcytic hypochromic.",
-      difficulty: "Easy",
+      question: "Aschoff bodies seen in?",
+      answer: "Rheumatic heart disease.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "B12 deficiency?",
-      answer: "Megaloblastic anemia.",
-      difficulty: "Easy",
+      question: "Reed-Sternberg cells in?",
+      answer: "Hodgkin's lymphoma.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "Folate deficiency?",
-      answer: "Megaloblastic anemia.",
-      difficulty: "Easy",
+      question: "Psammoma bodies in?",
+      answer: "Papillary thyroid carcinoma.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "DNA structure?",
-      answer: "Double helix.",
-      difficulty: "Easy",
+      question: "Russell bodies are?",
+      answer: "Intracellular immunoglobulin accumulation.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Pharmacology: [
+    {
+      question: "What is the mechanism of action of aspirin?",
+      answer: "Irreversible inhibition of cyclooxygenase (COX) enzymes.",
       tags: ["High Yield", "Rapid Revision"],
     },
     {
-      question: "RNA types?",
-      answer: "mRNA, tRNA, rRNA.",
-      difficulty: "Easy",
+      question: "Which drug is used as an antidote for organophosphate poisoning?",
+      answer: "Atropine and pralidoxime.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the first-line treatment for hypertension?",
+      answer: "ACE inhibitors or ARBs.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which antibiotic is contraindicated in pregnancy?",
+      answer: "Tetracyclines.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the antidote for heparin overdose?",
+      answer: "Protamine sulfate.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Warfarin acts by inhibiting?",
+      answer: "Vitamin K epoxide reductase.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Morphine side effects?",
+      answer: "Respiratory depression, constipation, miosis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Digoxin toxicity treated with?",
+      answer: "Digoxin-specific Fab fragments.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Beta-blockers contraindicated in?",
+      answer: "Asthma and heart block.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Statins side effect?",
+      answer: "Myopathy and hepatotoxicity.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Microbiology: [
+    {
+      question: "Which bacteria causes cholera?",
+      answer: "Vibrio cholerae.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for tuberculosis?",
+      answer: "RIPE regimen: Rifampicin, Isoniazid, Pyrazinamide, Ethambutol.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which virus causes chickenpox?",
+      answer: "Varicella-zoster virus (VZV).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the most common cause of UTI?",
+      answer: "Escherichia coli.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which fungus causes candidiasis?",
+      answer: "Candida albicans.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "HIV reverse transcriptase inhibited by?",
+      answer: "Nucleoside reverse transcriptase inhibitors (NRTIs).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Tetanus caused by?",
+      answer: "Clostridium tetani.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Gas gangrene caused by?",
+      answer: "Clostridium perfringens.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Leprosy caused by?",
+      answer: "Mycobacterium leprae.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Malaria caused by?",
+      answer: "Plasmodium species.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  "Forensic Medicine": [
+    {
+      question: "What is the postmortem interval estimation based on?",
+      answer: "Body temperature, rigor mortis, lividity, and decomposition changes.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which poison causes garlic odor in breath?",
+      answer: "Arsenic.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the legal age of consent in India?",
+      answer: "18 years.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which injury is characteristic of hanging?",
+      answer: "Oblique ligature mark above thyroid cartilage.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for cyanide poisoning?",
+      answer: "Hydroxocobalamin or sodium thiosulfate.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Diatoms found in?",
+      answer: "Drowning cases.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Chop wound caused by?",
+      answer: "Heavy sharp weapon.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Defense wounds seen in?",
+      answer: "Homicidal assaults.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Rigor mortis starts from?",
+      answer: "Jaw muscles.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  "Community Medicine": [
+    {
+      question: "What is the incubation period of chickenpox?",
+      answer: "10-21 days.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which vaccine is given at birth in India?",
+      answer: "BCG and OPV.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the normal BMI range?",
+      answer: "18.5-24.9 kg/m².",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which disease is eradicated in India?",
+      answer: "Smallpox.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the Expanded Program on Immunization (EPI)?",
+      answer: "National immunization program providing vaccines to all children.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Oral rehydration solution contains?",
+      answer: "Sodium, potassium, glucose, and water.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "DPT vaccine protects against?",
+      answer: "Diphtheria, pertussis, tetanus.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "MMR vaccine protects against?",
+      answer: "Measles, mumps, rubella.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Cold chain maintained for?",
+      answer: "Vaccine storage.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  "General Medicine": [
+    {
+      question: "What is the most common cause of community-acquired pneumonia?",
+      answer: "Streptococcus pneumoniae.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which drug is used for acute myocardial infarction?",
+      answer: "Aspirin, heparin, and reperfusion therapy.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the diagnostic criteria for diabetes mellitus?",
+      answer: "Fasting blood glucose ≥126 mg/dL or HbA1c ≥6.5%.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which electrolyte imbalance causes tetany?",
+      answer: "Hypocalcemia.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for pulmonary embolism?",
+      answer: "Anticoagulation with heparin followed by warfarin.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Beck's triad in cardiac tamponade?",
+      answer: "Hypotension, muffled heart sounds, distended neck veins.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Kussmaul's sign seen in?",
+      answer: "Constrictive pericarditis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Hamman's sign is?",
+      answer: "Mediastinal crunch in pneumomediastinum.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Murphy's sign positive in?",
+      answer: "Acute cholecystitis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Cullen's sign seen in?",
+      answer: "Acute pancreatitis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  "General Surgery": [
+    {
+      question: "What is the most common cause of acute appendicitis?",
+      answer: "Fecalith obstruction.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which hernia has the highest risk of strangulation?",
+      answer: "Femoral hernia.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for acute cholecystitis?",
+      answer: "Cholecystectomy.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which vessel is ligated in hemorrhoidectomy?",
+      answer: "Superior rectal artery.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the most common complication of thyroidectomy?",
+      answer: "Hypocalcemia due to parathyroid damage.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "McBurney's point is?",
+      answer: "Location of maximum tenderness in appendicitis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Carcinoma of gallbladder associated with?",
+      answer: "Gallstones.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Intussusception common in?",
+      answer: "Children 6-18 months.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Volvulus common site?",
+      answer: "Sigmoid colon.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Acute mesenteric ischemia due to?",
+      answer: "Superior mesenteric artery thrombosis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Orthopedics: [
+    {
+      question: "What is the most common site of osteoporosis fracture?",
+      answer: "Vertebral bodies.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which test is used to diagnose anterior cruciate ligament tear?",
+      answer: "Lachman test.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for scaphoid fracture?",
+      answer: "Cast immobilization for 6-8 weeks.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which bone is most commonly fractured in children?",
+      answer: "Clavicle.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the complication of femoral neck fracture?",
+      answer: "Avascular necrosis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Ottawa ankle rules for?",
+      answer: "Ankle radiography.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Garden classification for?",
+      answer: "Femoral neck fractures.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Smith's fracture is?",
+      answer: "Reverse Colles' fracture.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Monteggia's fracture involves?",
+      answer: "Ulna fracture with radial head dislocation.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Galeazzi fracture involves?",
+      answer: "Radius fracture with distal radioulnar joint dislocation.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Pediatrics: [
+    {
+      question: "What is the most common congenital heart defect?",
+      answer: "Ventricular septal defect (VSD).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which vaccine is contraindicated in immunocompromised children?",
+      answer: "Live vaccines (MMR, varicella, oral polio).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for croup?",
+      answer: "Humidified oxygen and dexamethasone.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which condition causes blueberry muffin lesions?",
+      answer: "Congenital rubella syndrome.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the most common cause of neonatal jaundice?",
+      answer: "Physiological jaundice.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "APGAR score assesses?",
+      answer: "Newborn condition at 1 and 5 minutes.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Kernicterus due to?",
+      answer: "Unconjugated bilirubin toxicity.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Tetralogy of Fallot components?",
+      answer: "VSD, pulmonary stenosis, overriding aorta, right ventricular hypertrophy.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Meconium ileus seen in?",
+      answer: "Cystic fibrosis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Necrotizing enterocolitis risk factors?",
+      answer: "Prematurity and formula feeding.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  "Obstetrics & Gynecology": [
+    {
+      question: "What is the normal gestational period?",
+      answer: "37-42 weeks.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which hormone maintains pregnancy?",
+      answer: "Progesterone.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the most common cause of postpartum hemorrhage?",
+      answer: "Uterine atony.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which condition is characterized by preeclampsia + seizures?",
+      answer: "Eclampsia.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for ectopic pregnancy?",
+      answer: "Methotrexate or surgical removal.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Bishop score assesses?",
+      answer: "Cervical readiness for induction.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Placenta previa types?",
+      answer: "Total, partial, marginal, low-lying.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "HELLP syndrome associated with?",
+      answer: "Severe preeclampsia.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Rh incompatibility leads to?",
+      answer: "Hemolytic disease of newborn.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Cervical cancer screening?",
+      answer: "Pap smear every 3 years.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  ENT: [
+    {
+      question: "What is the most common cause of conductive hearing loss?",
+      answer: "Otitis media.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which nerve is tested in Rinne test?",
+      answer: "Auditory nerve function.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for acute otitis media?",
+      answer: "Amoxicillin.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which condition causes sensorineural hearing loss?",
+      answer: "Meniere's disease.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the most common nasal polyp?",
+      answer: "Antrochoanal polyp.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Tympanic membrane perforation causes?",
+      answer: "Conductive hearing loss.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Stapedectomy for?",
+      answer: "Otosclerosis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Facial nerve palsy treatment?",
+      answer: "Prednisone and acyclovir.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Tonsillectomy indicated for?",
+      answer: "Recurrent tonsillitis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Epistaxis common site?",
+      answer: "Little's area (Kiesselbach's plexus).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Ophthalmology: [
+    {
+      question: "What is the most common cause of blindness worldwide?",
+      answer: "Cataract.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which condition causes cupping of optic disc?",
+      answer: "Glaucoma.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for bacterial conjunctivitis?",
+      answer: "Topical antibiotics.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which vitamin deficiency causes night blindness?",
+      answer: "Vitamin A.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the most common intraocular malignancy?",
+      answer: "Uveal melanoma.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Diabetic retinopathy screening?",
+      answer: "Annual fundus examination.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Amblyopia treatment?",
+      answer: "Patching of good eye.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Retinoblastoma presents as?",
+      answer: "White pupillary reflex (cat's eye reflex).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Chalazion vs Hordeolum?",
+      answer: "Chalazion: meibomian gland; Hordeolum: eyelash follicle.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Corneal ulcer caused by?",
+      answer: "Pseudomonas aeruginosa.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Dermatology: [
+    {
+      question: "What is the most common skin cancer?",
+      answer: "Basal cell carcinoma.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which condition causes silvery scales?",
+      answer: "Psoriasis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for acne vulgaris?",
+      answer: "Topical retinoids and antibiotics.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which virus causes warts?",
+      answer: "Human papillomavirus (HPV).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the most common fungal infection?",
+      answer: "Tinea pedis (athlete's foot).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Nikolsky's sign positive in?",
+      answer: "Pemphigus vulgaris.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Auspitz sign seen in?",
+      answer: "Psoriasis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Koebner phenomenon in?",
+      answer: "Psoriasis and lichen planus.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Vitiligo treatment?",
+      answer: "Topical corticosteroids and phototherapy.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Acne scarring treated with?",
+      answer: "Laser resurfacing.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Psychiatry: [
+    {
+      question: "First-line medication for Major Depressive Disorder?",
+      answer: "SSRIs (Selective Serotonin Reuptake Inhibitors).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "First-line antipsychotic for acute psychosis?",
+      answer: "Atypical antipsychotics (risperidone, olanzapine).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "DSM-5 criteria for Major Depressive Disorder duration?",
+      answer: "Symptoms must be present for at least 2 weeks.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the first-line treatment for Generalized Anxiety Disorder?",
+      answer: "SSRIs or SNRIs.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Neuroleptic Malignant Syndrome is associated with?",
+      answer: "Antipsychotic use, presenting with fever, rigidity, altered mental status, and elevated CPK.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Most common type of anxiety disorder?",
+      answer: "Generalized Anxiety Disorder (GAD).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Bipolar Disorder Type I vs Type II difference?",
+      answer: "Type I: at least one manic episode. Type II: hypomanic and depressive episodes only.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "First-line mood stabilizer for Bipolar Disorder?",
+      answer: "Lithium.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Lithium therapeutic level?",
+      answer: "0.6-1.2 mEq/L.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is SIADH as a side effect of SSRI use?",
+      answer: "Syndrome of Inappropriate Antidiuretic Hormone secretion causing hyponatremia.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "First-line treatment for Panic Disorder?",
+      answer: "SSRIs with cognitive behavioral therapy (CBT).",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the key feature of Obsessive-Compulsive Disorder?",
+      answer: "Presence of both obsessions and compulsions causing distress and functional impairment.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Tardive Dyskinesia is a side effect of which class of drugs?",
+      answer: "First-generation antipsychotics.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Management of Tardive Dyskinesia?",
+      answer: "Switch to second-generation antipsychotics or add benztropine.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "First-line treatment for Post-Traumatic Stress Disorder (PTSD)?",
+      answer: "SSRIs or SNRIs with trauma-focused CBT.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Radiology: [
+    {
+      question: "What is the most common chest X-ray finding in pneumonia?",
+      answer: "Airspace consolidation.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which imaging is best for acute stroke?",
+      answer: "CT brain without contrast.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What does MRI stand for?",
+      answer: "Magnetic Resonance Imaging.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which contrast is used for CT angiography?",
+      answer: "Iodinated contrast.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the radiation dose comparison: CT chest vs CXR?",
+      answer: "CT chest = 100-200 CXR doses.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Pneumothorax on CXR shows?",
+      answer: "Visceral pleural line and absent lung markings.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Cardiomegaly on CXR defined as?",
+      answer: "Cardiothoracic ratio >0.5.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Sail sign seen in?",
+      answer: "Left upper lobe collapse.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Ground glass opacity in?",
+      answer: "Pulmonary edema, hemorrhage, or early pneumonia.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Honeycombing seen in?",
+      answer: "Idiopathic pulmonary fibrosis.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Anesthesiology: [
+    {
+      question: "What is the MAC of isoflurane?",
+      answer: "1.15%.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which drug reverses neuromuscular blockade?",
+      answer: "Neostigmine.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the normal ETCO2 range?",
+      answer: "35-45 mmHg.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which local anesthetic has the longest duration?",
+      answer: "Bupivacaine.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the treatment for malignant hyperthermia?",
+      answer: "Dantrolene and cooling.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Succinylcholine contraindicated in?",
+      answer: "Burns, trauma, neuromuscular disorders.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "LMA sizes based on?",
+      answer: "Patient weight.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Rapid sequence induction includes?",
+      answer: "Cricoid pressure, succinylcholine, intubation.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Post-dural puncture headache treated with?",
+      answer: "Epidural blood patch.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "ASA classification I is?",
+      answer: "Healthy patient.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+  ],
+  Toxicology: [
+    {
+      question: "Antidote for paracetamol overdose?",
+      answer: "N-acetylcysteine (NAC).",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for opioid overdose?",
+      answer: "Naloxone.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for benzodiazepine overdose?",
+      answer: "Flumazenil.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for beta-blocker overdose?",
+      answer: "Glucagon.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for calcium channel blocker overdose?",
+      answer: "Calcium gluconate and insulin.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for methanol and ethylene glycol?",
+      answer: "Fomepizole.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for cyanide poisoning?",
+      answer: "Hydroxocobalamin or sodium thiosulfate.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for iron overdose?",
+      answer: "Deferoxamine.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for warfarin overdose?",
+      answer: "Vitamin K and fresh frozen plasma.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for heparin overdose?",
+      answer: "Protamine sulfate.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for lead poisoning?",
+      answer: "Dimercaprol (BAL) or EDTA.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for arsenic poisoning?",
+      answer: "Dimercaprol (BAL).",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for mercury poisoning?",
+      answer: "Dimercaprol (BAL) or succimer.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for organophosphate poisoning?",
+      answer: "Atropine and pralidoxime.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Antidote for carbamate poisoning?",
+      answer: "Atropine.",
+      tags: ["Antidotes", "High Yield", "Rapid Revision"],
+    },
+  ],
+  "Emergency Medicine": [
+    {
+      question: "What is the first step in the ABCDE approach?",
+      answer: "Airway assessment.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the immediate treatment for anaphylaxis?",
+      answer: "Intramuscular epinephrine.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which burn depth involves full-thickness skin loss?",
+      answer: "Third-degree burns.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "What is the primary goal of trauma resuscitation?",
+      answer: "Restore airway, breathing, and circulation.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Which arrhythmia is treated with immediate defibrillation?",
+      answer: "Ventricular fibrillation.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Tension pneumothorax treatment?",
+      answer: "Needle decompression followed by chest tube.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Cardiac arrest algorithm starts with?",
+      answer: "CPR and defibrillation if shockable rhythm.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Acute coronary syndrome treatment?",
+      answer: "Aspirin, nitroglycerin, morphine, oxygen.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Status epilepticus treatment?",
+      answer: "Benzodiazepines followed by phenytoin.",
+      tags: ["High Yield", "Rapid Revision"],
+    },
+    {
+      question: "Hypovolemic shock treatment?",
+      answer: "Fluid resuscitation with crystalloids.",
       tags: ["High Yield", "Rapid Revision"],
     },
   ],
@@ -3164,6 +4031,7 @@ export default function App() {
   const [fileName, setFileName] = useState("");
   const [fileType, setFileType] = useState("");
   const [noteText, setNoteText] = useState("");
+  const [linkUrl, setLinkUrl] = useState("");
   const [selectedSubject, setSelectedSubject] = useState(subjects[0]);
   const [subjectView, setSubjectView] = useState(subjects[0]);
   const [cardLibrary, setCardLibrary] = useState({});
@@ -3171,14 +4039,30 @@ export default function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCards, setSearchCards] = useState("");
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [activeFilters, setActiveFilters] = useState([]);
+  const [revisionMode, setRevisionMode] = useState("");
+  const [bookmarks, setBookmarks] = useState({});
+  const [mistakes, setMistakes] = useState({ skipped: {}, incorrect: {}, bookmarks: {} });
+  const [progress, setProgress] = useState({});
+  const [screen, setScreen] = useState("subjects");
+  const [notification, setNotification] = useState("");
+  const [extractedTextPreview, setExtractedTextPreview] = useState("");
+  const [extractionPreviewUrl, setExtractionPreviewUrl] = useState("");
+  const [extractedSourceName, setExtractedSourceName] = useState("");
 
   useEffect(() => {
     const savedLibrary = safeParse(localStorage.getItem(STORAGE_KEYS.library), {});
     const savedImports = safeParse(localStorage.getItem(STORAGE_KEYS.imports), []);
     const savedSubject = localStorage.getItem(STORAGE_KEYS.selectedSubject);
+    const savedBookmarks = safeParse(localStorage.getItem(STORAGE_KEYS.bookmarks), {});
+    const savedMistakes = safeParse(localStorage.getItem(STORAGE_KEYS.mistakes), { skipped: {}, incorrect: {}, bookmarks: {} });
+    const savedProgress = safeParse(localStorage.getItem(STORAGE_KEYS.progress), {});
 
     setCardLibrary(Object.keys(savedLibrary).length ? savedLibrary : defaultCardLibrary);
     setRecentImports(savedImports);
+    setBookmarks(savedBookmarks);
+    setMistakes(savedMistakes);
+    setProgress(savedProgress);
 
     if (savedSubject && subjects.includes(savedSubject)) {
       setSelectedSubject(savedSubject);
@@ -3198,7 +4082,20 @@ export default function App() {
     localStorage.setItem(STORAGE_KEYS.selectedSubject, selectedSubject);
   }, [selectedSubject]);
 
-  const currentDeck = cardLibrary[subjectView] || [];
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.bookmarks, JSON.stringify(bookmarks));
+  }, [bookmarks]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.mistakes, JSON.stringify(mistakes));
+  }, [mistakes]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.progress, JSON.stringify(progress));
+  }, [progress]);
+
+  const currentDeck = subjectView && revisionMode === "" ? cardLibrary[subjectView] || [] : [];
+
 
   const filteredSubjects = useMemo(() => {
     if (!searchTerm.trim()) return subjects;
@@ -3216,14 +4113,24 @@ export default function App() {
   }, [searchTerm, cardLibrary]);
 
   const filteredCards = useMemo(() => {
-    if (!searchCards.trim()) return currentDeck;
+    let cards = currentDeck;
+
+    if (revisionMode) {
+      const mode = REVISION_MODES.find(m => m.id === revisionMode);
+      if (mode) {
+        cards = Object.values(cardLibrary).flat().filter(mode.predicate);
+      }
+    }
+
+    if (!searchCards.trim() && activeFilters.length === 0) return cards;
+
     const query = searchCards.toLowerCase();
-    return currentDeck.filter(
-      (card) =>
-        card.question.toLowerCase().includes(query) ||
-        card.answer.toLowerCase().includes(query)
-    );
-  }, [searchCards, currentDeck]);
+    return cards.filter((card) => {
+      const searchMatch = !query || card.question.toLowerCase().includes(query) || card.answer.toLowerCase().includes(query);
+      const filterMatch = activeFilters.length === 0 || activeFilters.some(filter => card.tags?.includes(filter));
+      return searchMatch && filterMatch;
+    });
+  }, [searchCards, currentDeck, activeFilters, revisionMode, cardLibrary]);
 
   const currentCard = filteredCards[currentCardIndex] || filteredCards[0] || null;
 
@@ -3235,9 +4142,34 @@ export default function App() {
     return worker;
   };
 
+  const preprocessImageForOCR = async (source) => {
+    const image = source instanceof HTMLCanvasElement ? source : await createImageBitmap(source);
+    const canvas = document.createElement("canvas");
+    const maxWidth = 1800;
+    const ratio = Math.min(1, maxWidth / image.width);
+    canvas.width = Math.max(800, image.width * ratio);
+    canvas.height = Math.max(800, image.height * ratio);
+    const context = canvas.getContext("2d");
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const gray = 0.299 * r + 0.587 * g + 0.114 * b;
+      const enhanced = Math.min(255, Math.max(0, (gray - 128) * 1.4 + 128));
+      data[i] = data[i + 1] = data[i + 2] = enhanced;
+    }
+    context.putImageData(imageData, 0, 0);
+    return canvas;
+  };
+
   const recognizeImageText = async (source) => {
     const worker = await createOcrWorker();
-    const input = source instanceof HTMLCanvasElement ? source.toDataURL("image/png") : source;
+    const preprocessed = await preprocessImageForOCR(source);
+    const input = preprocessed.toDataURL("image/png");
     const {
       data: { text },
     } = await worker.recognize(input);
@@ -3282,6 +4214,7 @@ export default function App() {
       id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
       question,
       answer,
+      subject: selectedSubject,
       difficulty: "",
       source,
       importedAt: new Date().toISOString(),
@@ -3309,6 +4242,9 @@ export default function App() {
     setFileName("");
     setFileType("");
     setNoteText("");
+    setExtractedTextPreview("");
+    setExtractionPreviewUrl("");
+    setExtractedSourceName("");
     setCurrentCardIndex(0);
     setShowAnswer(false);
   };
@@ -3319,43 +4255,236 @@ export default function App() {
 
     setFileName(file.name);
     setFileType(file.type || "file");
+    setExtractedSourceName(file.name);
+    setExtractionPreviewUrl(file.type.startsWith("image/") ? URL.createObjectURL(file) : "");
+    setExtractedTextPreview("");
 
-    const fileLabel = file.type.startsWith("image/")
-      ? "image"
-      : file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")
-      ? "PDF"
-      : "file";
-
-    let answer = `Imported ${fileLabel}: ${file.name}`;
+    let extractedText = "";
 
     if (file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf")) {
       const arrayBuffer = await file.arrayBuffer();
-      const extractedText = await extractPdfText(arrayBuffer);
-      answer = extractedText.trim() || `Scanned PDF imported: ${file.name}`;
+      extractedText = await extractPdfText(arrayBuffer);
     } else if (file.type.startsWith("image/")) {
-      const ocrText = await recognizeImageText(file);
-      answer = ocrText || `Imported image: ${file.name}`;
+      extractedText = await recognizeImageText(file);
     } else if (file.type.startsWith("text/") || file.name.toLowerCase().endsWith(".txt")) {
-      const rawText = await file.text();
-      if (rawText.trim()) {
-        answer = rawText.trim();
-      }
+      extractedText = await file.text();
     }
 
-    createCard({
-      question: `Review imported ${selectedSubject} ${fileLabel}`,
-      answer,
-      source: file.name,
-    });
+    setExtractedTextPreview(extractedText.trim());
+    setNotification("Text extracted. Review the preview and generate flashcards.");
+    setTimeout(() => setNotification(""), 3000);
   };
 
   const handleSaveNotes = () => {
     if (!noteText.trim()) return;
+    const cards = generateFlashcardsFromText(noteText.trim(), selectedSubject);
+    if (cards.length > 0) {
+      createMultipleCards(cards);
+      setNotification(`${cards.length} flashcards generated`);
+      setTimeout(() => setNotification(""), 3000);
+      return;
+    }
+
     createCard({
       question: `Review saved notes for ${selectedSubject}`,
       answer: noteText.trim(),
       source: "Handwritten note",
+      subject: selectedSubject,
     });
+  };
+
+  const handleGenerateExtractedPreview = () => {
+    const sourceText = extractedTextPreview.trim();
+    if (!sourceText && !extractionPreviewUrl) {
+      setNotification("No extracted text or image preview available to generate flashcards.");
+      setTimeout(() => setNotification(""), 3000);
+      return;
+    }
+
+    if (!sourceText && extractionPreviewUrl) {
+      const imageCard = {
+        question: `Review the ${selectedSubject} image`,
+        answer: `Interpret the image findings in the context of ${selectedSubject}.`,
+        subject: selectedSubject,
+        tags: ["Image", "High Yield"],
+        imageSrc: extractionPreviewUrl,
+      };
+      createMultipleCards([imageCard]);
+      setNotification("Image flashcard created.");
+      setTimeout(() => setNotification(""), 3000);
+      return;
+    }
+
+    const generatedCards = generateFlashcardsFromText(sourceText, selectedSubject);
+    if (generatedCards.length > 0) {
+      createMultipleCards(generatedCards);
+      setNotification(`${generatedCards.length} flashcards generated`);
+      setTimeout(() => setNotification(""), 3000);
+      return;
+    }
+
+    createCard({
+      question: `Review imported ${selectedSubject} content`,
+      answer: sourceText,
+      source: extractedSourceName || "Imported content",
+      subject: selectedSubject,
+    });
+  };
+
+  const handleLinkImport = async () => {
+    if (!linkUrl.trim()) return;
+    try {
+      // In a real implementation, this would fetch content from the URL
+      // For now, we'll create a placeholder card
+      createCard({
+        question: `Review content from ${selectedSubject} link`,
+        answer: `Content from: ${linkUrl}\n\n[AI would extract and summarize content here]`,
+        source: linkUrl,
+      });
+      setLinkUrl("");
+      setNotification("Link processed (AI generation coming soon)");
+      setTimeout(() => setNotification(""), 3000);
+    } catch (error) {
+      setNotification("Failed to process link");
+      setTimeout(() => setNotification(""), 3000);
+    }
+  };
+
+  const generateFlashcardsFromText = (text, subject) => {
+    const normalized = text
+      .replace(/\r\n/g, "\n")
+      .replace(/\t/g, " ")
+      .replace(/ +/g, " ")
+      .trim();
+
+    const rawLines = normalized
+      .split(/\n+/)
+      .flatMap((line) => line.split(/(?<=\.)\s+/))
+      .map((line) => line.trim())
+      .filter((line) => line.length > 20 && !/^(page|chapter|figure|table|references|index|refernces|summary|contents)/i.test(line));
+
+    const uniqueLines = [...new Set(rawLines)];
+    const cards = [];
+    const seen = new Set();
+
+    const addCard = (question, answer, tags = []) => {
+      const key = `${question}||${answer}`;
+      if (seen.has(key) || cards.length >= 8) return;
+      seen.add(key);
+      cards.push({
+        question,
+        answer,
+        subject,
+        tags: ["Generated", "High Yield", ...new Set(tags)].filter(Boolean),
+      });
+    };
+
+    const createQuestionAnswer = (line) => {
+      const [left, right] = line.split(/[:\-–—]+/).map((part) => part.trim());
+      if (right && left && right.length > 10) {
+        const question = left.endsWith("?") ? left : `${left.replace(/\b(is|are|causes|presents|indicates|manifests)\b/i, "$&")}?`;
+        return { question, answer: right };
+      }
+
+      if (/antidote/i.test(line)) {
+        return {
+          question: line.endsWith("?") ? line : `What is the antidote for ${line.replace(/.*antidote for/i, "").replace(/\.$/, "")}?`,
+          answer: line.replace(/.*antidote for/i, "").replace(/\.$/, ""),
+        };
+      }
+
+      if (/drug of choice/i.test(line)) {
+        return {
+          question: line.endsWith("?") ? line : `What is the drug of choice for ${line.replace(/.*drug of choice for/i, "").replace(/\.$/, "")}?`,
+          answer: line.replace(/.*drug of choice.*for/i, "").replace(/\.$/, ""),
+        };
+      }
+
+      if (/(?:investigation|diagnosis|diagnostic|test)/i.test(line)) {
+        return {
+          question: line.endsWith("?") ? line : `Which investigation is indicated for ${line.replace(/.*for /i, "").replace(/\.$/, "")}?`,
+          answer: line,
+        };
+      }
+
+      if (/(?:emergency|acute|urgent|shock|arrest|anaphylaxis|coma)/i.test(line)) {
+        return {
+          question: line.endsWith("?") ? line : `What is the key point about this emergency: ${line.slice(0, 60).replace(/\.$/, "")}...?`,
+          answer: line,
+        };
+      }
+
+      if (/(?:is|are|causes|presents|manifests)/i.test(line)) {
+        return {
+          question: line.endsWith("?") ? line : `What does this statement mean: ${line.slice(0, 60).replace(/\.$/, "")}...?`,
+          answer: line,
+        };
+      }
+
+      return null;
+    };
+
+    uniqueLines.forEach((line) => {
+      const excerpt = line.replace(/\s+/g, " ").trim();
+      if (!excerpt || excerpt.length < 35) return;
+      const qa = createQuestionAnswer(excerpt);
+      if (qa) {
+        const tags = [];
+        if (/antidote|poisoning|toxidrome/i.test(excerpt)) tags.push("Toxicology");
+        if (/drug of choice|treatment|management/i.test(excerpt)) tags.push("Therapy");
+        if (/investigation|diagnosis|diagnostic|test/i.test(excerpt)) tags.push("Investigation");
+        if (/emergency|acute|urgent/i.test(excerpt)) tags.push("Emergency");
+        addCard(qa.question, qa.answer, tags);
+      }
+    });
+
+    if (cards.length === 0) {
+      uniqueLines.slice(0, 5).forEach((line) => {
+        const words = line.split(" ");
+        if (words.length >= 8) {
+          const question = `What is the main point about: ${words.slice(0, 5).join(" ")}...?`;
+          addCard(question, line, ["Generated"]);
+        }
+      });
+    }
+
+    return cards;
+  };
+
+  const createMultipleCards = (cards) => {
+    const newCards = cards.map(card => ({
+      id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+      ...card,
+      importedAt: new Date().toISOString(),
+    }));
+
+    setCardLibrary((prev) => {
+      const existing = prev[selectedSubject] || [];
+      return {
+        ...prev,
+        [selectedSubject]: [...newCards, ...existing],
+      };
+    });
+
+    setRecentImports((prev) => [
+      {
+        id: newCards[0].id,
+        subject: selectedSubject,
+        fileName: `Generated ${newCards.length} cards`,
+        fileType: "generated",
+        importedAt: newCards[0].importedAt,
+      },
+      ...prev.slice(0, 4),
+    ]);
+
+    setFileName("");
+    setFileType("");
+    setNoteText("");
+    setExtractedTextPreview("");
+    setExtractionPreviewUrl("");
+    setExtractedSourceName("");
+    setCurrentCardIndex(0);
+    setShowAnswer(false);
   };
 
   const setCardDifficulty = (difficulty) => {
@@ -3371,233 +4500,625 @@ export default function App() {
     });
   };
 
+  const toggleBookmark = () => {
+    if (!currentCard) return;
+    setBookmarks(prev => ({
+      ...prev,
+      [currentCard.id]: !prev[currentCard.id]
+    }));
+    setNotification(bookmarks[currentCard.id] ? "Bookmark removed" : "Card bookmarked");
+    setTimeout(() => setNotification(""), 2000);
+  };
+
+  const shuffleDeck = () => {
+    const shuffled = [...filteredCards].sort(() => Math.random() - 0.5);
+    setCardLibrary(prev => ({
+      ...prev,
+      [subjectView]: shuffled
+    }));
+    setCurrentCardIndex(0);
+    setShowAnswer(false);
+    setNotification("Deck shuffled");
+    setTimeout(() => setNotification(""), 2000);
+  };
+
+  const nextCard = () => {
+    if (currentCardIndex < filteredCards.length - 1) {
+      setCurrentCardIndex(currentCardIndex + 1);
+      setShowAnswer(false);
+    }
+  };
+
+  const prevCard = () => {
+    if (currentCardIndex > 0) {
+      setCurrentCardIndex(currentCardIndex - 1);
+      setShowAnswer(false);
+    }
+  };
+
   const handleSubjectClick = (subject) => {
     setSubjectView(subject);
     setSelectedSubject(subject);
     setCurrentCardIndex(0);
     setShowAnswer(false);
+    setScreen("flashcards");
+    setRevisionMode("");
+    setActiveFilters([]);
+  };
+
+  const handleRevisionModeClick = (modeId) => {
+    setRevisionMode(modeId);
+    setScreen("flashcards");
+    setCurrentCardIndex(0);
+    setShowAnswer(false);
+  };
+
+  const toggleFilter = (filter) => {
+    setActiveFilters(prev => 
+      prev.includes(filter) 
+        ? prev.filter(f => f !== filter)
+        : [...prev, filter]
+    );
+  };
+
+  const explainCard = () => {
+    if (!currentCard) return;
+    // This would integrate with AI API in real implementation
+    setNotification("Explanation feature coming soon!");
+    setTimeout(() => setNotification(""), 3000);
+  };
+
+  const getSubjectStats = (subject) => {
+    const cards = cardLibrary[subject] || [];
+    const total = cards.length;
+    const bookmarked = cards.filter(card => bookmarks[card.id]).length;
+    const recent = cards.filter(card => {
+      const imported = new Date(card.importedAt);
+      const weekAgo = new Date();
+      weekAgo.setDate(weekAgo.getDate() - 7);
+      return imported > weekAgo;
+    }).length;
+    return { total, bookmarked, recent };
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial" }}>
-      <h1>🧠 NEET PG Rapid Cards</h1>
-
-      <div
-        style={{
-          border: "1px solid gray",
-          padding: "20px",
-          borderRadius: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        🔥 Streak: 7 days <br />
-        🎯 Due today: 20 cards <br />
-        ⭐ Weak topics: 12
-      </div>
-
-      <div
-        style={{
-          border: "1px solid gray",
-          padding: "20px",
-          borderRadius: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        <h2>Today's Revision</h2>
-        <div style={{ marginBottom: "18px" }}>
-          <strong>Subject deck:</strong> {subjectView}
+    <div style={{
+      minHeight: "100vh",
+      backgroundColor: "#1a1a1a",
+      color: "#ffffff",
+      fontFamily: "Arial, sans-serif",
+      padding: "20px"
+    }}>
+      {notification && (
+        <div style={{
+          position: "fixed",
+          top: "20px",
+          right: "20px",
+          backgroundColor: "#4CAF50",
+          color: "white",
+          padding: "10px 20px",
+          borderRadius: "5px",
+          zIndex: 1000
+        }}>
+          {notification}
         </div>
+      )}
 
-        {currentCard ? (
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <h1 style={{ textAlign: "center", marginBottom: "30px", color: "#ffffff" }}>
+          🧠 NEET PG Rapid Cards
+        </h1>
+
+        {screen === "subjects" && (
           <>
-            <h3>{currentCard.question}</h3>
-            {!showAnswer ? (
-              <button onClick={() => setShowAnswer(true)}>Show Answer</button>
-            ) : (
-              <>
-                <h3>{currentCard.answer}</h3>
-                <div style={{ marginTop: "10px" }}>
-                  <button onClick={() => setCardDifficulty("Easy")}>😄 Easy</button>
-                  <button
-                    style={{ marginLeft: "10px" }}
-                    onClick={() => setCardDifficulty("Medium")}
-                  >
-                    😐 Medium
-                  </button>
-                  <button
-                    style={{ marginLeft: "10px" }}
-                    onClick={() => setCardDifficulty("Hard")}
-                  >
-                    😵 Hard
-                  </button>
-                </div>
-              </>
-            )}
-          </>
-        ) : (
-          <p style={{ color: "#555" }}>
-            No cards available for this subject yet. Upload a file or save notes to create your first card.
-          </p>
-        )}
-      </div>
+            <div style={{
+              backgroundColor: "#2a2a2a",
+              padding: "20px",
+              borderRadius: "15px",
+              marginBottom: "30px",
+              textAlign: "center"
+            }}>
+              🔥 Streak: 7 days | 🎯 Due today: 20 cards | ⭐ Weak topics: 12
+            </div>
 
-      <div
-        style={{
-          border: "1px solid gray",
-          padding: "20px",
-          borderRadius: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        <h2>📄 Import Notes & Files</h2>
-        <label style={{ display: "block", marginBottom: "10px" }}>
-          Choose subject before upload
-        </label>
-        <select
-          value={selectedSubject}
-          onChange={(e) => setSelectedSubject(e.target.value)}
-          style={{ padding: "8px", borderRadius: "6px", width: "100%", maxWidth: "320px" }}
-        >
-          {subjects.map((subject) => (
-            <option key={subject} value={subject}>
-              {subject}
-            </option>
-          ))}
-        </select>
-
-        <div style={{ marginTop: "16px" }}>
-          <input
-            type="file"
-            accept=".pdf,image/*,text/plain"
-            onChange={handleFileChange}
-            style={{ width: "100%", maxWidth: "320px" }}
-          />
-        </div>
-
-        <div style={{ marginTop: "16px" }}>
-          <textarea
-            rows={4}
-            value={noteText}
-            onChange={(e) => setNoteText(e.target.value)}
-            placeholder="Or paste quick notes here to save as a flashcard"
-            style={{ width: "100%", maxWidth: "560px", padding: "10px", borderRadius: "10px" }}
-          />
-        </div>
-
-        <button
-          onClick={handleSaveNotes}
-          style={{ marginTop: "10px" }}
-        >
-          Save Notes as Card
-        </button>
-
-        {fileName && (
-          <p style={{ marginTop: "10px" }}>
-            Imported: {fileName} ({fileType || "file"})
-          </p>
-        )}
-      </div>
-
-      <div style={{ marginBottom: "20px" }}>
-        <h2>🔎 Search subjects and flashcards</h2>
-        <input
-          type="search"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search subjects or card content"
-          style={{ width: "100%", maxWidth: "560px", padding: "10px", borderRadius: "10px" }}
-        />
-      </div>
-
-      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-        <div style={{ flex: "1 1 320px", minWidth: "300px" }}>
-          <h2>📚 Subjects</h2>
-          {filteredSubjects.map((subject) => {
-            const count = (cardLibrary[subject] || []).length;
-            return (
-              <div
-                key={subject}
-                onClick={() => handleSubjectClick(subject)}
+            <div style={{ marginBottom: "30px" }}>
+              <input
+                type="search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search subjects..."
                 style={{
-                  border: subjectView === subject ? "2px solid #1f6feb" : "1px solid #ccc",
-                  background: subjectView === subject ? "#eef4ff" : "#fff",
-                  margin: "10px 0",
-                  padding: "15px",
-                  borderRadius: "10px",
-                  cursor: "pointer",
+                  width: "100%",
+                  maxWidth: "400px",
+                  padding: "12px",
+                  borderRadius: "25px",
+                  border: "none",
+                  backgroundColor: "#2a2a2a",
+                  color: "#ffffff",
+                  fontSize: "16px",
+                  marginBottom: "20px",
+                  display: "block",
+                  marginLeft: "auto",
+                  marginRight: "auto"
                 }}
-              >
-                📘 {subject}
-                <div style={{ fontSize: "13px", color: "#555", marginTop: "6px" }}>
-                  {count} saved card{count === 1 ? "" : "s"}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+              />
+            </div>
 
-        <div style={{ flex: "1 1 320px", minWidth: "300px" }}>
-          <h2>🧾 {subjectView} Deck</h2>
-          <div style={{ marginBottom: "10px" }}>
-            <input
-              type="search"
-              value={searchCards}
-              onChange={(e) => {
-                setSearchCards(e.target.value);
-                setCurrentCardIndex(0);
-              }}
-              placeholder="Search flashcards in this subject"
-              style={{ width: "100%", padding: "10px", borderRadius: "10px" }}
-            />
-          </div>
-          {filteredCards.length === 0 ? (
-            <p style={{ color: "#555" }}>No flashcards match this subject and search query.</p>
-          ) : (
-            filteredCards.map((card, index) => (
-              <div
-                key={card.id}
-                style={{
-                  border: index === currentCardIndex ? "2px solid #1f6feb" : "1px solid #ddd",
-                  padding: "14px",
-                  borderRadius: "10px",
-                  marginBottom: "10px",
-                  background: index === currentCardIndex ? "#f8fbff" : "#fff",
-                }}
-                onClick={() => {
-                  setCurrentCardIndex(index);
-                  setShowAnswer(false);
-                }}
-              >
-                <strong>{card.question}</strong>
-                <div style={{ marginTop: "6px", fontSize: "13px", color: "#555" }}>
-                  Difficulty: {card.difficulty || "Not rated"}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      </div>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: "20px",
+              marginBottom: "40px"
+            }}>
+              {filteredSubjects.map((subject) => {
+                const stats = getSubjectStats(subject);
+                return (
+                  <div
+                    key={subject}
+                    onClick={() => handleSubjectClick(subject)}
+                    style={{
+                      backgroundColor: "#2a2a2a",
+                      border: "2px solid #444",
+                      borderRadius: "15px",
+                      padding: "20px",
+                      cursor: "pointer",
+                      transition: "all 0.3s ease",
+                      boxShadow: "0 4px 6px rgba(0,0,0,0.3)"
+                    }}
+                    onMouseEnter={(e) => e.target.style.transform = "translateY(-5px)"}
+                    onMouseLeave={(e) => e.target.style.transform = "translateY(0)"}
+                  >
+                    <h3 style={{ margin: "0 0 10px 0", color: "#ffffff" }}>
+                      📘 {subject}
+                    </h3>
+                    <div style={{ fontSize: "14px", color: "#cccccc" }}>
+                      {stats.total} cards • {stats.bookmarked} bookmarked • {stats.recent} recent
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
-      <div
-        style={{
-          border: "1px solid gray",
-          padding: "20px",
-          borderRadius: "10px",
-          marginTop: "20px",
-        }}
-      >
-        <h2>🕒 Recent Imports</h2>
-        {recentImports.length === 0 ? (
-          <p style={{ color: "#555" }}>No recent imports yet. Upload a PDF, image, or notes to get started.</p>
-        ) : (
-          recentImports.map((item) => (
-            <div key={item.id} style={{ marginBottom: "12px" }}>
-              <strong>{item.fileName}</strong> • {item.subject}
-              <div style={{ fontSize: "13px", color: "#555" }}>
-                {item.fileType} • {new Date(item.importedAt).toLocaleString()}
+            <div style={{
+              backgroundColor: "#2a2a2a",
+              padding: "20px",
+              borderRadius: "15px",
+              marginBottom: "30px"
+            }}>
+              <h2 style={{ marginTop: 0, color: "#ffffff" }}>🚀 Rapid Revision Modes</h2>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                {REVISION_MODES.map((mode) => (
+                  <button
+                    key={mode.id}
+                    onClick={() => handleRevisionModeClick(mode.id)}
+                    style={{
+                      backgroundColor: "#4CAF50",
+                      color: "white",
+                      border: "none",
+                      padding: "10px 20px",
+                      borderRadius: "25px",
+                      cursor: "pointer",
+                      fontSize: "14px"
+                    }}
+                  >
+                    {mode.label}
+                  </button>
+                ))}
               </div>
             </div>
-          ))
+
+            <div style={{
+              backgroundColor: "#2a2a2a",
+              padding: "20px",
+              borderRadius: "15px",
+              marginBottom: "30px"
+            }}>
+              <h2 style={{ marginTop: 0, color: "#ffffff" }}>📄 AI Study Assistant</h2>
+              <div style={{ marginBottom: "15px" }}>
+                <select
+                  value={selectedSubject}
+                  onChange={(e) => setSelectedSubject(e.target.value)}
+                  style={{
+                    padding: "10px",
+                    borderRadius: "8px",
+                    backgroundColor: "#1a1a1a",
+                    color: "#ffffff",
+                    border: "1px solid #444",
+                    marginRight: "10px",
+                    width: "200px"
+                  }}
+                >
+                  {subjects.map((subject) => (
+                    <option key={subject} value={subject}>
+                      {subject}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "15px" }}>
+                <input
+                  type="file"
+                  accept=".pdf,image/*,text/plain"
+                  onChange={handleFileChange}
+                  style={{
+                    backgroundColor: "#1a1a1a",
+                    color: "#ffffff",
+                    border: "1px solid #444",
+                    padding: "8px",
+                    borderRadius: "8px"
+                  }}
+                />
+                <input
+                  type="url"
+                  value={linkUrl}
+                  onChange={(e) => setLinkUrl(e.target.value)}
+                  placeholder="Paste YouTube/article link"
+                  style={{
+                    flex: 1,
+                    padding: "8px",
+                    borderRadius: "8px",
+                    backgroundColor: "#1a1a1a",
+                    color: "#ffffff",
+                    border: "1px solid #444"
+                  }}
+                />
+                <button
+                  onClick={handleLinkImport}
+                  style={{
+                    backgroundColor: "#2196F3",
+                    color: "white",
+                    border: "none",
+                    padding: "8px 16px",
+                    borderRadius: "8px",
+                    cursor: "pointer"
+                  }}
+                >
+                  Process Link
+                </button>
+              </div>
+
+              <textarea
+                rows={3}
+                value={noteText}
+                onChange={(e) => setNoteText(e.target.value)}
+                placeholder="Or paste notes, screenshots, or text to generate flashcards"
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "8px",
+                  backgroundColor: "#1a1a1a",
+                  color: "#ffffff",
+                  border: "1px solid #444",
+                  resize: "vertical"
+                }}
+              />
+              <button
+                onClick={handleSaveNotes}
+                style={{
+                  marginTop: "10px",
+                  backgroundColor: "#FF9800",
+                  color: "white",
+                  border: "none",
+                  padding: "10px 20px",
+                  borderRadius: "8px",
+                  cursor: "pointer"
+                }}
+              >
+                Generate Flashcards
+              </button>
+
+              {(extractedTextPreview || extractionPreviewUrl) && (
+                <div style={{ marginTop: "20px", padding: "20px", backgroundColor: "#1a1a1a", borderRadius: "12px", border: "1px solid #444" }}>
+                  <div style={{ marginBottom: "10px", color: "#ffffff", fontWeight: "600" }}>
+                    Extracted preview from {extractedSourceName || "uploaded file"}
+                  </div>
+                  {extractionPreviewUrl && (
+                    <div style={{ marginBottom: "15px", textAlign: "center" }}>
+                      <img
+                        src={extractionPreviewUrl}
+                        alt="Uploaded preview"
+                        style={{
+                          maxWidth: "100%",
+                          maxHeight: "240px",
+                          borderRadius: "12px",
+                          border: "1px solid #333"
+                        }}
+                      />
+                    </div>
+                  )}
+                  <pre style={{
+                    whiteSpace: "pre-wrap",
+                    wordBreak: "break-word",
+                    maxHeight: "240px",
+                    overflowY: "auto",
+                    backgroundColor: "#111",
+                    color: "#eee",
+                    padding: "12px",
+                    borderRadius: "10px",
+                    border: "1px solid #333"
+                  }}>
+                    {extractedTextPreview || "No text was detected in this upload. Tap generate to create an image-based flashcard."}
+                  </pre>
+                  <button
+                    onClick={handleGenerateExtractedPreview}
+                    style={{
+                      marginTop: "15px",
+                      backgroundColor: "#4CAF50",
+                      color: "white",
+                      border: "none",
+                      padding: "10px 20px",
+                      borderRadius: "8px",
+                      cursor: "pointer"
+                    }}
+                  >
+                    Generate Flashcards from Preview
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
+        )}
+
+        {screen === "flashcards" && (
+          <>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "20px"
+            }}>
+              <button
+                onClick={() => setScreen("subjects")}
+                style={{
+                  backgroundColor: "#666",
+                  color: "white",
+                  border: "none",
+                  padding: "10px 20px",
+                  borderRadius: "8px",
+                  cursor: "pointer"
+                }}
+              >
+                ← Back to Subjects
+              </button>
+              <div style={{ color: "#ffffff", fontSize: "18px" }}>
+                {revisionMode ? REVISION_MODES.find(m => m.id === revisionMode)?.label : subjectView}
+              </div>
+              <div style={{ color: "#cccccc" }}>
+                Card {currentCardIndex + 1} of {filteredCards.length}
+              </div>
+            </div>
+
+            {currentCard ? (
+              <div
+                onClick={() => setShowAnswer(!showAnswer)}
+                style={{
+                  backgroundColor: "#2a2a2a",
+                  borderRadius: "20px",
+                  padding: "40px",
+                  minHeight: "300px",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  textAlign: "center",
+                  cursor: "pointer",
+                  boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
+                  transition: "transform 0.3s ease",
+                  marginBottom: "30px"
+                }}
+                onMouseEnter={(e) => e.target.style.transform = "scale(1.02)"}
+                onMouseLeave={(e) => e.target.style.transform = "scale(1)"}
+              >
+                {currentCard.imageSrc ? (
+                  <>
+                    <img
+                      src={currentCard.imageSrc}
+                      alt="Flashcard visual"
+                      style={{
+                        width: "100%",
+                        maxWidth: "560px",
+                        maxHeight: "320px",
+                        objectFit: "contain",
+                        borderRadius: "18px",
+                        marginBottom: "20px",
+                        border: "1px solid #333"
+                      }}
+                    />
+                    <div style={{
+                      fontSize: "20px",
+                      fontWeight: "600",
+                      color: "#ffffff",
+                      marginBottom: "16px"
+                    }}>
+                      {currentCard.question}
+                    </div>
+                    {showAnswer && (
+                      <div style={{ fontSize: "18px", color: "#cccccc", maxWidth: "760px" }}>
+                        {currentCard.answer}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <div style={{
+                      fontSize: "24px",
+                      fontWeight: "bold",
+                      color: "#ffffff",
+                      marginBottom: "20px"
+                    }}>
+                      {showAnswer ? currentCard.answer : currentCard.question}
+                    </div>
+                    {currentCard.tags && (
+                      <div style={{ fontSize: "14px", color: "#888" }}>
+                        {currentCard.tags.join(" • ")}
+                      </div>
+                    )}
+                  </>
+                )}
+                <div style={{
+                  marginTop: "20px",
+                  fontSize: "16px",
+                  color: "#cccccc"
+                }}>
+                  {showAnswer ? "Tap to hide answer" : "Tap to reveal answer"}
+                </div>
+              </div>
+            ) : (
+              <div style={{
+                backgroundColor: "#2a2a2a",
+                borderRadius: "20px",
+                padding: "40px",
+                textAlign: "center",
+                color: "#cccccc"
+              }}>
+                No cards available. Go back and select a different subject or add more cards.
+              </div>
+            )}
+
+            <div style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "15px",
+              flexWrap: "wrap",
+              marginBottom: "30px"
+            }}>
+              <button
+                onClick={prevCard}
+                disabled={currentCardIndex === 0}
+                style={{
+                  backgroundColor: currentCardIndex === 0 ? "#444" : "#666",
+                  color: "white",
+                  border: "none",
+                  padding: "12px 24px",
+                  borderRadius: "25px",
+                  cursor: currentCardIndex === 0 ? "not-allowed" : "pointer",
+                  fontSize: "16px"
+                }}
+              >
+                ⬅️ Previous
+              </button>
+
+              <button
+                onClick={toggleBookmark}
+                style={{
+                  backgroundColor: bookmarks[currentCard?.id] ? "#FF5722" : "#666",
+                  color: "white",
+                  border: "none",
+                  padding: "12px 24px",
+                  borderRadius: "25px",
+                  cursor: "pointer",
+                  fontSize: "16px"
+                }}
+              >
+                {bookmarks[currentCard?.id] ? "❤️ Bookmarked" : "🤍 Bookmark"}
+              </button>
+
+              <button
+                onClick={shuffleDeck}
+                style={{
+                  backgroundColor: "#9C27B0",
+                  color: "white",
+                  border: "none",
+                  padding: "12px 24px",
+                  borderRadius: "25px",
+                  cursor: "pointer",
+                  fontSize: "16px"
+                }}
+              >
+                🔀 Shuffle
+              </button>
+
+              <button
+                onClick={explainCard}
+                style={{
+                  backgroundColor: "#00BCD4",
+                  color: "white",
+                  border: "none",
+                  padding: "12px 24px",
+                  borderRadius: "25px",
+                  cursor: "pointer",
+                  fontSize: "16px"
+                }}
+              >
+                💡 Explain
+              </button>
+
+              <button
+                onClick={nextCard}
+                disabled={currentCardIndex >= filteredCards.length - 1}
+                style={{
+                  backgroundColor: currentCardIndex >= filteredCards.length - 1 ? "#444" : "#666",
+                  color: "white",
+                  border: "none",
+                  padding: "12px 24px",
+                  borderRadius: "25px",
+                  cursor: currentCardIndex >= filteredCards.length - 1 ? "not-allowed" : "pointer",
+                  fontSize: "16px"
+                }}
+              >
+                Next ➡️
+              </button>
+            </div>
+
+            <div style={{
+              backgroundColor: "#2a2a2a",
+              padding: "20px",
+              borderRadius: "15px",
+              marginBottom: "30px"
+            }}>
+              <h3 style={{ marginTop: 0, color: "#ffffff" }}>🔍 Filters & Search</h3>
+              <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "15px" }}>
+                {FILTER_TAGS.map((filter) => (
+                  <button
+                    key={filter}
+                    onClick={() => toggleFilter(filter)}
+                    style={{
+                      backgroundColor: activeFilters.includes(filter) ? "#4CAF50" : "#444",
+                      color: "white",
+                      border: "none",
+                      padding: "8px 16px",
+                      borderRadius: "20px",
+                      cursor: "pointer",
+                      fontSize: "14px"
+                    }}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
+              <input
+                type="search"
+                value={searchCards}
+                onChange={(e) => {
+                  setSearchCards(e.target.value);
+                  setCurrentCardIndex(0);
+                }}
+                placeholder="Search within current deck..."
+                style={{
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "8px",
+                  backgroundColor: "#1a1a1a",
+                  color: "#ffffff",
+                  border: "1px solid #444"
+                }}
+              />
+            </div>
+
+            <div style={{
+              backgroundColor: "#2a2a2a",
+              padding: "20px",
+              borderRadius: "15px"
+            }}>
+              <h3 style={{ marginTop: 0, color: "#ffffff" }}>📊 Progress & Weak Topics</h3>
+              <div style={{ color: "#cccccc" }}>
+                Bookmarked: {Object.keys(bookmarks).length} cards<br/>
+                Weak topics: {Object.keys(mistakes.incorrect).length} areas to review<br/>
+                Recent activity: {Object.keys(mistakes.bookmarks).length} bookmarked items
+              </div>
+            </div>
+          </>
         )}
       </div>
     </div>
