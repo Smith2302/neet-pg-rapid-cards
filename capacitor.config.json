@@ -1,5 +1,5 @@
 {
   "appId": "com.neetpg.rapidcards",
   "appName": "NEET PG Rapid Cards",
-  "webDir": "dist"
+  "webDir": "neet-pg-rapid-cards/dist"
 }
